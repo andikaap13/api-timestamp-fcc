@@ -33,11 +33,20 @@ app.get("/api/:time", function (req, res) {
   }
 
   var date = new Date(time);
+  var result;
 
-  res.json({
-    unix: date.getTime(),
-    utc: date.toUTCString()
-  });
+  if (date.isValid()) {
+    result = {
+      unix: date.getTime(),
+      utc: date.toUTCString()
+    }
+  } else {
+    result = {
+      error: date.toUTCString()
+    }
+  }
+
+  res.json(result);
 });
 
 
